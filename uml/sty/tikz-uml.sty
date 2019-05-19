@@ -321,7 +321,8 @@
     \def\tikzumlPackage@nodeName{\tikzumlPackageName}%
   }%
   %
-  \StrSubstitute{\tikzumlPackage@nodeName}{.}{@POINT@}{\tikzumlPackage@nodeName}%
+  \StrSubstitute{\tikzumlPackage@nodeName}{.}{@POINT@}[\tikzumlPackage@nodeName]%
+  \StrSubstitute{\tikzumlPackage@fitname}{.}{@POINT@}[\tikzumlPackage@fitname]%
   %
   \expandafter\gdef\csname tikzumlPackageFit\tikzumlPackage@parent @@\tikzumlPackage@fitname\endcsname{}%
   %
@@ -455,6 +456,7 @@
   }%
   %
   \StrSubstitute{\tikzumlClassNodeName}{:}{@COLON@}[\tikzumlClassNodeName]%
+  \StrSubstitute{\tikzumlClassNodeName}{.}{@POINT@}[\tikzumlClassNodeName]%
   \StrSubstitute{\tikzumlClassNodeName}{\_}{@UNDERSCORE@}[\tikzumlClassNodeName]%
   %
   \ifthenelse{\equal{\tikzumlClassTypeTmp}{abstract}}{%
