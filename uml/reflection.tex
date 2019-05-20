@@ -1,0 +1,92 @@
+\documentclass{article}
+
+% figure[H] float
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+\usepackage{./sty/tikz-uml}
+
+% 中文默认没有斜体和粗体格式，开启伪斜体和指定黑体；
+\setCJKmainfont[AutoFakeSlant, BoldFont=SimHei]{SimSun}
+% 设置页大小和页边距，或者scale=0.8
+\geometry{a4paper,left=3.18cm,right=3.18cm,top=2.54cm,bottom=2.54cm}
+
+\begin{document}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{umlpackage}{java.lang.reflect}
+      % interface AnnotatedElement
+      \umlsimpleclass[type=interface, x=2, y=0]{AnnotatedElement}
+
+      % class AccessibleObject
+      \umlsimpleclass[x=-3, y=-2]{AccessibleObject}
+      \umlimpl[geometry=|-|]{AccessibleObject}{AnnotatedElement}
+
+      % interface GenericDeclaration
+      \umlsimpleclass[type=interface, x=4, y=-2]{GenericDeclaration}
+      \umlinherit[geometry=|-|]{GenericDeclaration}{AnnotatedElement}
+
+      % class Executable
+      \umlsimpleclass[x=3, y=-4]{Executable}
+      \umlimpl[geometry=-|, anchors=90 and -120]{Executable}{GenericDeclaration}
+      \umlinherit[geometry=-|]{Executable}{AccessibleObject}
+
+      % class Constructor、Method
+      \umlsimpleclass[x=-1, y=-6]{Constructor}
+      \umlinherit[geometry=|-|]{Constructor}{Executable}
+      \umlsimpleclass[x=5, y=-6]{Method}
+      \umlinherit[geometry=|-|]{Method}{Executable}
+
+      % class Parameter
+      \umlsimpleclass[x=-3, y=0]{Parameter}
+      \umlimpl[geometry=--]{Parameter}{AnnotatedElement}
+    \end{umlpackage}
+
+    \begin{umlpackage}{java.lang}
+      % class Package
+      \umlsimpleclass[x=6, y=3]{Package}
+      \umlimpl[geometry=-|]{Package}{AnnotatedElement}
+
+      % class Class
+      \umlsimpleclass[x=6, y=2]{Class}
+      \umlimpl[geometry=-|]{Class}{AnnotatedElement}
+      \umlimpl[geometry=-|, anchors=-90 and 20]{Class}{GenericDeclaration}
+    \end{umlpackage}
+  \end{tikzpicture}
+  \caption{Reflection 结构，第一部分}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{umlpackage}{java.lang.reflect}
+      % interface AnnotatedElement
+      \umlsimpleclass[type=interface, x=0, y=0]{AnnotatedElement}
+
+      % interface TypeVariable
+      \umlsimpleclass[type=interface, x=-4, y=-2]{TypeVariable}
+      \umlinherit[geometry=|-|]{TypeVariable}{AnnotatedElement}
+
+      % interface AnnotatedType
+      \umlsimpleclass[type=interface, x=3, y=-2]{AnnotatedType}
+      \umlinherit[geometry=|-|]{AnnotatedType}{AnnotatedElement}
+
+      % interface AnnotatedParameterizedType、AnnotatedTypeVariable
+      % interface AnnotatedArrayType、AnnotatedWildcardType
+      \umlsimpleclass[type=interface, x=3, y=-4]{AnnotatedArrayType}
+      \umlsimpleclass[type=interface, x=3, y=-6]{AnnotatedTypeVariable}
+      \umlsimpleclass[type=interface, x=3, y=-8]{AnnotatedWildcardType}
+      \umlsimpleclass[type=interface, x=3, y=-10]{AnnotatedParameterizedType}
+      % link
+      \umlinherit{AnnotatedArrayType}{AnnotatedType}
+      \umlinherit{AnnotatedTypeVariable}{AnnotatedType}
+      \umlinherit{AnnotatedWildcardType}{AnnotatedType}
+      \umlinherit{AnnotatedParameterizedType}{AnnotatedType}
+    \end{umlpackage}
+  \end{tikzpicture}
+  \caption{Reflection 结构，第二部分}
+\end{figure}
+\end{document}
